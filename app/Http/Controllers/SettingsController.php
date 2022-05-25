@@ -2,41 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ConfigHelper;
-use App\Helpers\CurrencyHelper;
-use App\Http\Requests\StoreSettingsRequest;
-use CoinGate\Client;
-use Illuminate\Http\Request;
+use App\Http\Requests\SettingsStoreRequest;
 
 class SettingsController extends Controller
 {
+    const SETTING_FILE = 'app/settings.json';
+
     public function index()
     {
-        $configHelper = ConfigHelper::make();
-        $currencyHelper = CurrencyHelper::make();
+        $client = getCoingateClient();
 
-        return view('settings.index', compact('configHelper', 'currencyHelper'));
+        $payoutCurrencies = $client->getMerchantPayoutCurrencies();
+        $redirectCurrencyCount = count((array) $client->getMerchantPayCurrencies());
+        $localCurrencyCount = count((array) $client->getCheckoutCurrencies());
+        $settingsFile = storage_path(self::SETTING_FILE);
+
+        $settings = getSettings();
+
+        return view('settings.index', compact(
+            'payoutCurrencies',
+            'settings',
+            'redirectCurrencyCount',
+            'localCurrencyCount',
+        ));
     }
 
-    public function update(StoreSettingsRequest $request)
+    public function update(SettingsStoreRequest $request)
     {
-        $testConnectionResult = Client::testConnection(
-            $request->input('api_key'),
-            $request->input('sandbox')
-        );
+        $settings = $request->validated();
 
-        if (! $testConnectionResult) {
-            return redirect()->back()->with('error', 'Connection failed for the given API key: ' . $request->input('api_key'));
-        }
+        saveSettings($settings);
 
-        $configHelper = ConfigHelper::make();
-        $configHelper->save(
-            $request->input('api_key'),
-            $request->input('sandbox'),
-            $request->input('currency'),
-            $request->input('checkout_method') === 'local'
-        );
-
-        return redirect()->route('settings.index')->with('success', 'Settings updated successfully');
+        return redirect()->route('settings.index')->with('success', 'Settings updated');
     }
 }

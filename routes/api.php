@@ -1,7 +1,19 @@
 <?php
 
-use App\Http\Controllers\API\CheckoutController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::post('pay-with-coingate', [CheckoutController::class, 'payWithCoinGate']);
-Route::get('orders/{orderId}', [CheckoutController::class, 'getOrder']);
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
+|
+*/
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});

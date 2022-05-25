@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "coingate/coingate-php": "^4.0",
+        "coingate/coingate-php": "^4.1",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.11",
         "laravel/sanctum": "^2.14.1",
@@ -25,7 +25,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
