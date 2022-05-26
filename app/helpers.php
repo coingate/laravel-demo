@@ -11,6 +11,8 @@ if (!function_exists('getCoingateClient')) {
     {
         $settings = getSettings();
 
+        Client::setAppInfo("Laravel demo shop v1", "1.0.0");
+
         return new Client($settings['api_key'], $settings['test_mode']);
     }
 }
