@@ -59,11 +59,10 @@
             </table>
         </div>
 
-
         <div id="callbackModal" v-if="selectedCallback" style="background-color: rgba(0, 0, 0, 0.5);"
-            class="flex p-10 items-center justify-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 bottom-0 z-50 w-full md:inset-0 h-modal md:h-full">
-            <div
-                class="mt-20 border dark:border-gray-600 rounded w-1/2 bg-white text-black dark:bg-gray-700 dark:text-white">
+            class="flex p-10 pt-32 items-center justify-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 bottom-0 z-50 w-full md:inset-0 h-modal md:h-full">
+            <div class="border dark:border-gray-600 rounded w-1/2 bg-white text-black dark:bg-gray-700 dark:text-white"
+                style="margin-top: 220px">
                 <div class="border-b p-5 dark:border-gray-600">
                     <div class="flex items-center justify-between">
                         <div>Callback</div>

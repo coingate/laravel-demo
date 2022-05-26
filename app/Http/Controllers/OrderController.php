@@ -76,7 +76,7 @@ class OrderController extends Controller
         ]);
     }
 
-    public function update($uuid)
+    public function fetchCoingateStatus($uuid)
     {
         $order = Order::where('uuid', $uuid)->firstOrFail();
 
@@ -99,27 +99,6 @@ class OrderController extends Controller
         return response()->json([
             'status' => $response->status,
         ]);
-    }
-
-    public function callback($uuid, Request $request)
-    {
-        $order = Order::where('uuid', $uuid)->firstOrFail();
-
-        try {
-            saveCallbackHistory($order, $request->all(), CallbackType::CALLBACK);
-
-            $order->update([
-                'status' => OrderStatus::from($request->input('status')),
-            ]);
-
-            return response()->json([
-                'success' => true,
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => $e->getMessage(),
-            ], 422);
-        }
     }
 
     public function success($uuid)

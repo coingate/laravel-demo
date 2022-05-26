@@ -15,7 +15,7 @@
                         <th scope="col" class="px-6 py-3">
                             Amount
                         </th>
-                        <th scope="col" class="px-6 py-3 w-24">
+                        <th scope="col" class="px-6 py-3 w-40">
                         </th>
                         <th scope="col" class="px-6 py-3 w-40">
                         </th>
@@ -37,12 +37,13 @@
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <a href="#" data-uuid="{{ $order->uuid }}"
-                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Update</a>
+                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Fetch status</a>
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <a href="{{ route('orders.callback-history', $order->uuid) }}"
-                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Check
-                                    history</a>
+                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                    History
+                                </a>
                             </td>
                         </tr>
                     @endforeach
@@ -65,19 +66,19 @@
                 button.addEventListener('click', event => {
                     event.preventDefault();
 
-                    button.innerHTML = 'Updating...';
+                    button.innerHTML = 'Fethcing...';
 
                     const uuid = event.target.dataset.uuid;
 
-                    axios.put('/orders/' + uuid + '/update')
+                    axios.put('/orders/' + uuid + '/fetch-status')
                         .then(response => {
                             const status = document.getElementById('status-' + uuid);
                             status.innerHTML = response.data.status.toUpperCase();
-                            button.innerHTML = 'Update';
+                            button.innerHTML = 'Fetch status';
                         })
                         .catch(error => {
                             console.log(error);
-                            button.innerHTML = 'Update';
+                            button.innerHTML = 'Fetch status';
                         });
                 });
             });
